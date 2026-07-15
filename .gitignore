@@ -1,0 +1,12 @@
+.env
+.venv
+chroma.db
+__pycache__
+*.pyc
+# Default ignored files
+/shelf/
+/workspace.xml
+# Editor-based HTTP Client requests
+/httpRequests/
+
+ git commit -m "Initial commit: RAG ticket support system"
