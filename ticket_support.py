@@ -12,7 +12,7 @@ client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 chroma_client = chromadb.PersistentClient(path="./chroma.db")
 collection = chroma_client.get_or_create_collection(name="tickets")
 
-print("1")
+
 def get_embeddings(text):
     result = client.models.embed_content(
         model="gemini-embedding-001",
@@ -33,7 +33,7 @@ tickets = [
     {"problem": "Keyboard keys are not working",
      "solution": "Clean keyboard, check USB connection or replace batteries"}
 ]
-print("2")
+
 if collection.count() == 0:
     for i, ticket in enumerate(tickets):
         collection.add(
@@ -57,16 +57,20 @@ def ask(request : TicketRequest):
     query_embedding = get_embeddings(request.query)
     result = collection.query(
         query_embeddings=[query_embedding],
-        n_results=1
+        n_results=3
     )
 
-    similar_problem = result["documents"][0][0]
-    past_solution = result["metadatas"][0][0]["solution"]
+    similar_problem = result["documents"][0]
+    past_solutions = result["metadatas"][0]
+    list_of_past_solution = [item["solution"] for item in past_solutions]
+
+    context_text = ""
+    for problem,solution in zip(similar_problem,list_of_past_solution):
+        context_text += f"Problem : {problem} | solution : {solution}"
 
     prompt_gemini = f""" You are a helpful IT support assistant.
-A similar past ticket was resolved with this information:
-Problem: {similar_problem}
-Solution: {past_solution}
+A similar past tickets were resolved with this information:
+{context_text}
 Now help with this new user query: {request.query}
 Give a concise, helpful response based on the past solution above.
 Give it point wise and Highlight the important words"""
@@ -79,7 +83,7 @@ Give it point wise and Highlight the important words"""
     return {
         "query" : request.query,
         "similar_past_ticket" : similar_problem,
-        "past_solution" : past_solution,
+        "past_solution" : past_solutions,
         "ai_answer" : response.text
     }
 
