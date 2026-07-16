@@ -66,6 +66,7 @@ def ask(request : TicketRequest):
     distance  = result["distances"][0]
     print(distance)
     print(distance[0])
+
     if distance[0] > 0.75 :
             return {
                 "query": request.query,
