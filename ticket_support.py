@@ -64,8 +64,6 @@ def ask(request : TicketRequest):
     past_solutions = result["metadatas"][0]
     list_of_past_solution = [item["solution"] for item in past_solutions]
     distance  = result["distances"][0]
-    print(distance)
-    print(distance[0])
 
     if distance[0] > 0.75 :
             return {
