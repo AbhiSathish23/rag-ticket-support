@@ -63,6 +63,16 @@ def ask(request : TicketRequest):
     similar_problem = result["documents"][0]
     past_solutions = result["metadatas"][0]
     list_of_past_solution = [item["solution"] for item in past_solutions]
+    distance  = result["distances"][0]
+    print(distance)
+    print(distance[0])
+    if distance[0] > 0.75 :
+            return {
+                "query": request.query,
+                "similar_past_ticket": similar_problem,
+                "past_solution": past_solutions,
+                "ai_answer": "No relevant past ticket found"
+            }
 
     context_text = ""
     for problem,solution in zip(similar_problem,list_of_past_solution):
