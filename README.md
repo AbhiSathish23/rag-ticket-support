@@ -203,6 +203,10 @@ RAG_TICKET_SUPPORT/
 └── README.md
 ```
 
+## Evaluation
+
+Labels were first drafted from system output, then revised after reviewing ticket text. The test set is small (6 queries + 2 no-match), so scores are directional.
+
 ## Notes
 
 - Embeddings are generated from the **problem** text; solutions are stored as metadata.

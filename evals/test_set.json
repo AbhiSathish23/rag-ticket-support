@@ -1,0 +1,10 @@
+[
+  {"query":"My screen Hangs frequently", "relevant_ids": ["3","1"]},
+  {"query":"My account is logging out automatically", "relevant_ids": ["1","2"]},
+  {"query":"VPN is making my internet slow Why?", "relevant_ids": ["1"]},
+  {"query":"Anime is great", "relevant_ids": []},
+  {"query":"Monitor is showing a black screen", "relevant_ids": ["3","4"]},
+  {"query":"I keep getting signed out of the portal", "relevant_ids": ["1","2"]},
+  {"query":"Everything is slow", "relevant_ids": ["1","3","4"]},
+  {"query":"Best pizza near me", "relevant_ids": []}
+]
